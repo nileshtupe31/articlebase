@@ -29,16 +29,34 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
+    order: [
+      'cookieParser',
+      'session',
+      'passportInit',            // <==== If you're using "passport", you'll want to have its two
+      'passportSession',         // <==== middleware functions run after "session".
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'router',
+      'www',
+      'favicon',
+    ],
+
+    /***************************************************************************
+    *                                                                          *
+    * Initialise for both passport and passport-local                          *
+    *                                                                          *
+    * https://sailsjs.com/config/http#?customizing-the-body-parser             *
+    *                                                                          *
+    ***************************************************************************/
+    
+  passportInit    : (function (){
+    return require('passport').initialize();
+  })(),
+
+  passportSession : (function (){
+    return require('passport').session();
+  })()
 
 
     /***************************************************************************
